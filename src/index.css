@@ -1,5 +1,35 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Inkulinati';
+  src: url(/src/assets/Inkulinati-Regular.otf);
+}
+
+@font-face {
+  font-family: 'Coolvetica';
+  src: url(/src/assets/Coolvetica.otf);
+}
+
+@font-face {
+  font-family: 'TT';
+  src: url(/src/assets/TT.otf);
+}
+
+@layer base {
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+
+  /* [data-radix-popper-content-wrapper] {
+    z-index: 60 !important;
+  } */
+}
+
 body {
   margin: 0;
   padding: 0

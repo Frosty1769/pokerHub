@@ -5,12 +5,18 @@ import ScrollArea from "../layout/ScrollArea"
 import TehasImage from "../../assets/texas.png"
 import HeaderImage from "../../assets/header.png"
 import BackImage from "../../assets/background.png"
+import JockerImage from "../../assets/jockerbounty.png"
+import Typography from "../../Typography"
+import Button from "../../input/Button"
 
 
 
-interface GameBar {
+export interface GameBar {
     id: String
     name: String
+    player_count: number
+    player_maxcount: number
+    deposit: number
 }
 
 interface IProps {
@@ -19,60 +25,65 @@ interface IProps {
 
 export const MainPage = (props: IProps) => {
     const [gameList, setGameList] = useState<GameBar[]>([
-        { id: "0", name: "Game 1" },
-        { id: "1", name: "Game 2" },
-        { id: "2", name: "Game 3" },
-        { id: "3", name: "Game 4" },
-        { id: "4", name: "Game 5" },
-        { id: "5", name: "Game 6" },
-        { id: "6", name: "Game 7" }])
+        { id: "0", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "1", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "2", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "3", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "4", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "5", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
+        { id: "6", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 }])
 
     useEffect(() => { }, [])
 
 
     return (
         <div
-            className="flex flex-1 h-screen max-w-[400px] flex-col "
-            style={{
-                backgroundImage: `url(${BackImage}) `,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'top',
-                backgroundRepeat: "no-repeat"
-            }}
+            className="flex flex-1 h-screen max-w-[400px] flex-col bg-[#0c0905]"
+        // style={{
+        //     backgroundImage: `url(${BackImage}) `,
+        //     backgroundSize: '100% 100%',
+        //     backgroundPosition: 'top',
+        //     backgroundRepeat: "no-repeat"
+        // }}
         >
             {/* Header */}
+            <div className="flex font-bold   bg-[#150f07] items-center justify-center p-2 ">
+                {/* <SearchIcon className="text-white  font-bold" /> */}
+                <Typography size="h4" className="text-[#c09d36]">PokerHub Club</Typography>
+            </div>
             <div
-                className="relative flex flex-col h-[400px] w-full"
-
+                className="relative flex flex-col h-[400px] pt-6 px-4 w-full "
             >
-
-                <div className="flex rounded-2xl items-center border justify-center p-2 ">
-                    <SearchIcon className="text-white  font-bold" />
+                <Typography size="h5" className="text-[#5e5e5e] font-extralight">PokerHub</Typography>
+                <div className="flex items-start justify-center flex-col">
+                    <Typography size="h1" className="text-white " >Спортивный покер —</Typography>
+                    <span className="text-[#cb9d33] text-[20px]">это не про деньги</span>
                 </div>
+                <Typography className="text-[#807f7f] text-[14px] pt-4">Турниры, рейтинги и живое комьюнити. Выбирай <br /> турнир и присоединяйся!</Typography>
+
+                <div className="flex justify-start gap-4 pt-4">
+                    <Button size="small">Войти</Button>
+                    <Button size="small" variant="tetriary">Зарегистрироваться</Button>
+                </div>
+                <Typography size="h6" className="text-[#5e5e5e] pt-2 font-extralight">Ближайшие турниры</Typography>
             </div>
             <ScrollArea className="flex flex-1 w-full ">
-                <div className="flex flex-1 flex-col gap-2 text-white font-bold">
+                <div className="flex flex-1 flex-col gap-2 px-4 text-white font-bold">
                     {gameList.map((item, index) => (
                         <div
                             key={index}
                             className="relative w-full flex flex-col items-center
-                             justify-end  border-2 border-amber-700 rounded-2xl bg-cover
+                             justify-end  border-2 border-amber-600/20 rounded-2xl bg-cover
                              overflow-hidden h-100"
-                            style={{
-                                backgroundImage: `url(${TehasImage})`,
-                                backgroundSize: "104% 150%",
-                                backgroundPosition: 'center top -100px',  // Сдвиг вверх на 100px
-                                backgroundRepeat: "no-repeat"
-                            }}
                         >
-                            <div className="flex flex-col w-full h-40 shadow-[inset_0_-150px_100px_-50px_rgba(0,0,0,0.8)] text-white p-4 z-10">
-                                <div className="flex flex-col h-full px-12 gap-4 items-stretch">
-                                    <h1>{item.name}</h1>
-                                    <h1>{item.name}</h1>
+                            <div className="flex justify-center items-center w-full"><img src={JockerImage} alt="" /></div>
+                            <div className="flex flex-col w-full h-40  text-white px-4 pt-1 z-10">
+                                <div className="flex flex-col h-full items-stretch">
+                                    <Typography size="h4">{item.name}</Typography>
+                                    <Typography className="text-[#5e5e5e]" size="h5">{item.player_count}/{item.player_maxcount} участников</Typography>
+                                    <Typography className="text-[#c09d36] pt-8" size="h5">Депозит: {item.deposit}₽</Typography>
                                 </div>
-                                <div className="flex items-center justify-center py-3 rounded-2xl border-3 border-orange-800 bg-amber-500">
-                                    Регистрация
-                                </div>
+                                <Button size="big">Регистрация на турнир</Button>
                             </div>
                         </div>
                     ))}
