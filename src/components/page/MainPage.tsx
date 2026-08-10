@@ -8,37 +8,45 @@ import BackImage from "../../assets/background.png"
 import JockerImage from "../../assets/jockerbounty.png"
 import Typography from "../../Typography"
 import Button from "../../input/Button"
+import { replace, useNavigate } from "react-router-dom"
+import type { GameBar } from "../../interfaces/Game"
+import { ReadGames } from "../../api/functions"
+import type { ResponseContainer } from "../../api/base"
+import { Path } from "../../enum/Path"
 
 
 
-export interface GameBar {
-    id: String
-    name: String
-    player_count: number
-    player_maxcount: number
-    deposit: number
-}
+
 
 interface IProps {
 
 }
 
 export const MainPage = (props: IProps) => {
+    const navigate = useNavigate()
     const [gameList, setGameList] = useState<GameBar[]>([
-        { id: "0", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "1", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "2", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "3", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "4", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "5", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 },
-        { id: "6", name: "Jocker Bounty", player_count: 10, player_maxcount: 20, deposit: 1000 }])
+    ])
 
-    useEffect(() => { }, [])
+    useEffect(() => {
+        ReadGames((resp: ResponseContainer<GameBar[]>) => {
+            // setIsChecked(true);
+            if (resp.status === 'ok') {
+                if (resp.data) {
+                    setGameList([...resp.data])
+                    console.log([...resp.data])
+                }
+            }
+        })
+    }, [])
 
+    const openGame = (id: String) => {
+        console.log(id)
+        navigate(Path.PGame + '/' + id)
+    }
 
     return (
         <div
-            className="flex flex-1 h-screen max-w-[400px] flex-col bg-[#0c0905]"
+            className="flex flex-1 h-screen max-w-[400px] flex-col "
         // style={{
         //     backgroundImage: `url(${BackImage}) `,
         //     backgroundSize: '100% 100%',
@@ -83,7 +91,7 @@ export const MainPage = (props: IProps) => {
                                     <Typography className="text-[#5e5e5e]" size="h5">{item.player_count}/{item.player_maxcount} участников</Typography>
                                     <Typography className="text-[#c09d36] pt-8" size="h5">Депозит: {item.deposit}₽</Typography>
                                 </div>
-                                <Button size="big">Регистрация на турнир</Button>
+                                <Button size="big" onClick={() => { console.log(item); openGame(item.id) }}>Регистрация на турнир</Button>
                             </div>
                         </div>
                     ))}
