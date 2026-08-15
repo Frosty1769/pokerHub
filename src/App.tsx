@@ -1,5 +1,4 @@
 import { TelegramProvider, useTelegram } from 'telegram-kit';
-import { MainPage } from './components/page/MainPage'
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Path } from './enum/Path';
 import { GamePage } from './components/page/GamePage';
@@ -11,6 +10,7 @@ import type { ResponseContainer } from './api/base';
 import type { AuthOut } from './interfaces/Auth';
 import { AuthProvider, useAuth } from './hooks/AuthContext';
 import { CreateGamePage } from './components/page/CreateGamePage';
+import MainPage from './components/page/MainPage';
 
 function InnerApp() {
   const [auth, setAuth] = useAuth();
@@ -47,6 +47,9 @@ function InnerApp() {
     Check((resp: ResponseContainer<AuthOut>) => {
       // setIsChecked(true);
       if (resp.status === 'ok') if (resp.data) onAuth(resp.data);
+      return () => {
+        console.log('Cleanup runs');
+      };
     });
   }, []);
 

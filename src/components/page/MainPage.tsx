@@ -15,14 +15,11 @@ import type { ResponseContainer } from "../../api/base"
 import { Path } from "../../enum/Path"
 
 
-
-
-
 interface IProps {
 
 }
 
-export const MainPage = (props: IProps) => {
+const MainPage = (props: IProps) => {
     const navigate = useNavigate()
     const [gameList, setGameList] = useState<GameBar[]>([
     ])
@@ -33,7 +30,6 @@ export const MainPage = (props: IProps) => {
             if (resp.status === 'ok') {
                 if (resp.data) {
                     setGameList([...resp.data])
-                    console.log([...resp.data])
                 }
             }
         })
@@ -100,3 +96,5 @@ export const MainPage = (props: IProps) => {
         </div>
     )
 }
+
+export default MainPage;

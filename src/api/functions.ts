@@ -5,6 +5,7 @@ import type { GameBar } from "../interfaces/Game";
 import type { ResponseContainer } from "./base";
 import { P, requestDelete, requestGet, requestPost } from "./requester";
 
+
 export function Login(
 	args: AuthIn,
 	callback: (resp: ResponseContainer<AuthOut>) => void
@@ -16,17 +17,16 @@ export function Register(
 	args: AuthIn,
 	callback: (resp: ResponseContainer<AuthOut>) => void
 ) {
+
 	requestPost<ResponseContainer<AuthOut>>(Path.Register, args, callback);
 }
 
 export function Check(
 	callback: (resp: ResponseContainer<AuthOut>) => void
 ) {
-	const encodedToken = localStorage.getItem('token');
 	requestGet<AuthOut>(
 		Path.Info,
 		callback,
-		{ Authorization: encodedToken }
 	);
 }
 

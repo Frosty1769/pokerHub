@@ -15,10 +15,11 @@ export async function requestGet<R>(
 	callback?: any,
 	headers?: any
 ) {
+	const encodedToken = localStorage.getItem('token');
 	axios
 		.get(MAIN_URL + url, {
 			withCredentials: true,
-			headers: headers,
+			headers: { Authorization: encodedToken, ...headers },
 		})
 		.then((response) => {
 			callback(response.data as ResponseContainer<R>);
@@ -34,8 +35,10 @@ export async function requestPost<R>(
 	callback?: any,
 	headers?: any
 ) {
+	const encodedToken = localStorage.getItem('token');
+
 	axios
-		.post(MAIN_URL + url, inData, { withCredentials: true, headers: headers })
+		.post(MAIN_URL + url, inData, { withCredentials: true, headers: { Authorization: encodedToken, ...headers }, })
 		.then((response) => {
 			callback(response.data as ResponseContainer<R>);
 		})
@@ -49,6 +52,8 @@ export async function requestPostForm<R>(
 	inData: any,
 	callback?: any
 ) {
+	const encodedToken = localStorage.getItem('token');
+
 	axios
 		.post(MAIN_URL + url, inData, {
 			withCredentials: true,
@@ -68,8 +73,10 @@ export async function requestPut<R>(
 	callback?: any,
 	headers?: any
 ) {
+	const encodedToken = localStorage.getItem('token');
+
 	axios
-		.put(MAIN_URL + url, inData, { withCredentials: true, headers: headers })
+		.put(MAIN_URL + url, inData, { withCredentials: true, headers: { Authorization: encodedToken, ...headers }, })
 		.then((response) => {
 			callback(response.data as ResponseContainer<R>);
 		})
@@ -79,8 +86,10 @@ export async function requestPut<R>(
 }
 
 export async function requestDelete<R>(url: string, callback?: any) {
+	const encodedToken = localStorage.getItem('token');
+
 	axios
-		.delete(MAIN_URL + url, { withCredentials: true })
+		.delete(MAIN_URL + url, { withCredentials: true, headers: { Authorization: encodedToken }, })
 		.then((response) => {
 			callback(response.data as ResponseContainer<R>);
 		})
