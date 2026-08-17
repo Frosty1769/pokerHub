@@ -2,7 +2,7 @@
 // src/api/client.ts
 import type { ErrorResponse } from '../types/auth';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const MAIN_URL = import.meta.env.VITE_MAIN_URL || 'http://localhost:5000/api';
 
 interface RequestOptions extends RequestInit {
     requiresAuth?: boolean;
@@ -143,4 +143,4 @@ class ApiClient {
     }
 }
 
-export const apiClient = new ApiClient(API_URL);
+export const apiClient = new ApiClient(MAIN_URL);
