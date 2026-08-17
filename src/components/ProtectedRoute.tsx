@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     }
 
     // Если авторизован - показываем контент
-    return <>{children}</>;
+    return children;
 };
 
 export default ProtectedRoute;
