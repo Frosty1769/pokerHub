@@ -3,36 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import { useAuth } from '../../../hooks/AuthContext';
+import { useTelegram } from '../../../hooks/useTelegram';
 
-declare global {
-    interface Window {
-        Telegram: {
-            WebApp: {
-                initData: string;
-                initDataUnsafe: {
-                    query_id: string;
-                    user: {
-                        id: number;
-                        first_name: string;
-                        last_name?: string;
-                        username?: string;
-                        language_code?: string;
-                        photo_url?: string;
-                    };
-                    auth_date: string;
-                    hash: string;
-                    start_param?: string;
-                };
-                expand: () => void;
-                ready: () => void;
-                showAlert: (message: string) => void;
-            };
-        };
-    }
-}
 
 const LoginPage: React.FC = () => {
     const { login, isAuthenticated, loading } = useAuth();
+    const { tg } = useTelegram();
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
 
@@ -44,13 +20,8 @@ const LoginPage: React.FC = () => {
         }
 
         // Проверяем запущено ли приложение в Telegram
-        if (window.Telegram?.WebApp) {
-            // Сообщаем Telegram что приложение готово
-            window.Telegram.WebApp.ready();
-            window.Telegram.WebApp.expand();
-
-            const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-
+        if (tg) {
+            const initDataUnsafe = tg.initDataUnsafe;
             if (initDataUnsafe?.user) {
                 // Автоматический вход через Telegram
                 handleTelegramLogin(initDataUnsafe);
@@ -70,20 +41,19 @@ const LoginPage: React.FC = () => {
             navigate('/');
         } catch (err) {
             setError('Ошибка входа. Попробуйте перезапустить приложение.');
-            console.error('Login error:', err);
-            window.Telegram?.WebApp?.showAlert('Ошибка входа. Попробуйте перезапустить приложение.');
+            console.error('Login error:', err, initData);
+            // tg.showAlert('Ошибка входа. Попробуйте перезапустить приложение.');s
         }
     };
 
     // Тестовый вход для разработки
     const handleTestLogin = async () => {
 
-        console.log(window.Telegram)
-        console.log(window.Telegram?.WebApp)
-        console.log(window.Telegram?.WebApp?.initData)
-        console.log(window.Telegram?.WebApp?.initDataUnsafe)
+        console.log(tg)
+        console.log(tg.initData)
+        console.log(tg.initDataUnsafe)
 
-        const initData = window.Telegram?.WebApp?.initDataUnsafe
+        const initData = tg.initDataUnsafe
         const testInitData = {
             query_id: 'test_query_id',
             user: {
