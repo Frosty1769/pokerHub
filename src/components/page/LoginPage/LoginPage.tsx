@@ -22,12 +22,12 @@ const LoginPage: React.FC = () => {
         // Проверяем запущено ли приложение в Telegram
         if (tg) {
             const initDataUnsafe = tg.initDataUnsafe;
-            if (initDataUnsafe?.user) {
-                // Автоматический вход через Telegram
-                handleTelegramLogin(initDataUnsafe);
-            } else {
-                setError('Не удалось получить данные от Telegram');
-            }
+            // if (initDataUnsafe?.user) {
+            //     // Автоматический вход через Telegram
+            //     handleTelegramLogin(initDataUnsafe);
+            // } else {
+            //     setError('Не удалось получить данные от Telegram');
+            // }
         } else {
             console.warn('Приложение запущено вне Telegram Mini App');
         }
