@@ -13,6 +13,7 @@ import type { GameBar } from "../../interfaces/Game"
 import { ReadGames } from "../../api/functions"
 import type { ResponseContainer } from "../../api/base"
 import { Path } from "../../enum/Path"
+import { useAuth } from "../../hooks/AuthContext"
 
 
 interface IProps {
@@ -21,6 +22,7 @@ interface IProps {
 
 const MainPage = (props: IProps) => {
     const navigate = useNavigate()
+    const auth = useAuth()
     const [gameList, setGameList] = useState<GameBar[]>([
     ])
 
@@ -40,6 +42,7 @@ const MainPage = (props: IProps) => {
         navigate(Path.PGame + '/' + id)
     }
 
+
     return (
         <div
             className="flex flex-1 h-screen max-w-[400px] flex-col "
@@ -51,9 +54,12 @@ const MainPage = (props: IProps) => {
         // }}
         >
             {/* Header */}
-            <div className="flex font-bold   bg-[#150f07] items-center justify-center p-2 ">
+            <div className="flex font-bold bg-[#150f07] items-center justify-center p-2 ">
                 {/* <SearchIcon className="text-white  font-bold" /> */}
                 <Typography size="h4" className="text-[#c09d36]">PokerHub Club</Typography>
+                <div className="absolute right-5 top-2">
+                    <Button size="small" onClick={() => auth.logout()}>Out</Button>
+                </div>
             </div>
             <div
                 className="relative flex flex-col h-[400px] pt-6 px-4 w-full "
