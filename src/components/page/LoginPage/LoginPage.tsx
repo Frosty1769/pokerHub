@@ -49,23 +49,19 @@ const LoginPage: React.FC = () => {
     // Тестовый вход для разработки
     const handleTestLogin = async () => {
 
-        console.log(tg)
-        console.log(tg.initData)
-        console.log(tg.initDataUnsafe)
-
-        const initData = tg.initDataUnsafe
-        const testInitData = {
-            query_id: 'test_query_id',
-            user: {
-                id: 123456789,
-                first_name: 'Test',
-                last_name: 'User',
-                username: 'test_user',
-                language_code: 'ru',
-            },
-            auth_date: Math.floor(Date.now() / 1000).toString(),
-            hash: 'test_hash',
-        };
+        const initData = tg.initData
+        // const testInitData = {
+        //     query_id: 'test_query_id',
+        //     user: {
+        //         id: 123456789,
+        //         first_name: 'Test',
+        //         last_name: 'User',
+        //         username: 'test_user',
+        //         language_code: 'ru',
+        //     },
+        //     auth_date: Math.floor(Date.now() / 1000).toString(),
+        //     hash: 'test_hash',
+        // };
         await handleTelegramLogin(initData);
     };
 
