@@ -77,7 +77,13 @@ const LoginPage: React.FC = () => {
 
     // Тестовый вход для разработки
     const handleTestLogin = async () => {
-        window.Telegram?.WebApp?.initData
+
+        console.log(window.Telegram)
+        console.log(window.Telegram?.WebApp)
+        console.log(window.Telegram?.WebApp?.initData)
+        console.log(window.Telegram?.WebApp?.initDataUnsafe)
+
+        const initData = window.Telegram?.WebApp?.initDataUnsafe
         const testInitData = {
             query_id: 'test_query_id',
             user: {
@@ -90,7 +96,7 @@ const LoginPage: React.FC = () => {
             auth_date: Math.floor(Date.now() / 1000).toString(),
             hash: 'test_hash',
         };
-        await handleTelegramLogin(window.Telegram?.WebApp?.initData);
+        await handleTelegramLogin(initData);
     };
 
     if (loading) {
