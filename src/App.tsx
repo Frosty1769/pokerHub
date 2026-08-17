@@ -5,6 +5,7 @@ import { AuthProvider } from './hooks/AuthContext';
 import { GamePage } from './components/page/GamePage';
 import LoginPage from './components/page/LoginPage/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import MainPage from './components/page/MainPage';
 
 // Ваши существующие страницы
 
@@ -25,7 +26,7 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <GamePage />
+                <MainPage />
               </ProtectedRoute>
             }
           />

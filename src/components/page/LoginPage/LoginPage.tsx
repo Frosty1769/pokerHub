@@ -76,7 +76,8 @@ const LoginPage: React.FC = () => {
     return (
         <div className="login-container">
             <div className="login-card">
-                <h1>♠️ PokerHub</h1>
+                <h1 className='text-[100px]!'>🌭 </h1>
+                <h1>Колбас.off</h1>
                 <p>Вход через Telegram</p>
 
                 {error && (
