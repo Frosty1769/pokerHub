@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
     // Тестовый вход для разработки
     const handleTestLogin = async () => {
 
-        const initData = tg.initData
+        const initData = tg.initDataUnsafe
         // const testInitData = {
         //     query_id: 'test_query_id',
         //     user: {
