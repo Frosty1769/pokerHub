@@ -87,21 +87,21 @@ const LoginPage: React.FC = () => {
                 )}
 
                 {/* В режиме разработки показываем тестовую кнопку */}
-                {!window.Telegram?.WebApp && (
+                {(
                     <button onClick={handleTestLogin} className="login-button">
-                        Тестовый вход (Dev)
+                        Войти через Telegram
                     </button>
                 )}
 
                 {/* В Telegram Mini App вход происходит автоматически */}
-                {window.Telegram?.WebApp && !loading && !error && (
+                {/* {window.Telegram?.WebApp && !loading && !error && (
                     <div className="telegram-info">
                         <p>Идет авторизация через Telegram...</p>
                         <div className="loading-dots">
                             <span>.</span><span>.</span><span>.</span>
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );
