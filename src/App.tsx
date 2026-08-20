@@ -20,19 +20,20 @@ function App() {
           {/* Публичный маршрут - страница входа */}
           <Route path="/login" element={<LoginPage />} />
 
-
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/game/:id" element={<GamePage />} />
+          <Route path="/rating" element={<RatingPage />} />
+          <Route path="/" element={<MainPage />} />
           {/* Защищенные маршруты */}
+          <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+          <Route path="/game/:id" element={<ProtectedRoute><GamePage /></ProtectedRoute>} />
+          <Route path="/rating" element={<ProtectedRoute><RatingPage /></ProtectedRoute>} />
           <Route
             path="/"
             element={
-              !isDev ?
-                (<ProtectedRoute>
-                  <Route path="/account" element={<AccountPage />} />
-                  <Route path="/game/:id" element={<GamePage />} />
-                  <Route path="/rating" element={<RatingPage />} />
-                  <Route path="/" element={<MainPage />} />
-                </ProtectedRoute>) :
-                (<RatingPage />)
+              <ProtectedRoute>
+                <Route path="/" element={<MainPage />} />
+              </ProtectedRoute>
             }
           />
 
