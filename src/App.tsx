@@ -2,18 +2,17 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './hooks/AuthContext';
-import { GamePage } from './components/page/GamePage';
 import LoginPage from './components/page/LoginPage/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainPage from './components/page/MainPage';
+import SecretPage from './components/page/SecretPage';
+import AccountPage from './components/page/AccountPage';
+import GamePage from './components/page/GamePage';
+import RatingPage from './components/page/RatingPage';
 
-// Ваши существующие страницы
-
-// Импортируйте другие ваши страницы, если они есть
-// import HomePage from './pages/HomePage/HomePage';
-// import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 function App() {
+  const isDev = import.meta.env.VITE_HOST == "dev"
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -21,13 +20,19 @@ function App() {
           {/* Публичный маршрут - страница входа */}
           <Route path="/login" element={<LoginPage />} />
 
+
           {/* Защищенные маршруты */}
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <MainPage />
-              </ProtectedRoute>
+              !isDev ?
+                (<ProtectedRoute>
+                  <Route path="/account" element={<AccountPage />} />
+                  <Route path="/game/:id" element={<GamePage />} />
+                  <Route path="/rating" element={<RatingPage />} />
+                  <Route path="/" element={<MainPage />} />
+                </ProtectedRoute>) :
+                (<RatingPage />)
             }
           />
 
@@ -52,7 +57,7 @@ function App() {
           */}
 
           {/* Редирект на главную для неизвестных маршрутов */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {!isDev && <Route path="*" element={<Navigate to="/" replace />} />}
         </Routes>
       </AuthProvider>
     </BrowserRouter>

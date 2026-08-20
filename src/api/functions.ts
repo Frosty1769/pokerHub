@@ -49,3 +49,10 @@ export function ReadGame(
 ) {
 	requestGet<ResponseContainer<GameBar>>(Path.PGame + "/" + id, callback);
 }
+
+export function Payment(
+	count: string,
+	callback: (resp: ResponseContainer<null>) => void
+) {
+	requestPost<ResponseContainer<null>>(Path.Payment, count, callback);
+}

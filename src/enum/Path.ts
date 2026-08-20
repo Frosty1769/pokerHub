@@ -13,6 +13,10 @@ export enum Path {
     Logout = '/logout',
     Weapons = '/weapons',
     Spells = '/spells',
+    Secret = '/secret',
+    Payment = '/payment',
+    Confirm = '/confirm',
+    Reject = '/reject',
 
     Add = 'add',
 }

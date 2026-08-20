@@ -1,106 +1,100 @@
-import { useEffect, useState } from "react"
-import SearchIcon from "../icon/SwordIcon"
-import ScrollArea from "../layout/ScrollArea"
+import { Link } from 'react-router-dom';
+import { Calendar, Trophy, Users, MapPin, ChevronRight } from 'lucide-react';
 
-import TehasImage from "../../assets/texas.png"
-import HeaderImage from "../../assets/header.png"
-import BackImage from "../../assets/background.png"
-import JockerImage from "../../assets/jockerbounty.png"
-import Typography from "../../Typography"
-import Button from "../../input/Button"
-import { replace, useNavigate } from "react-router-dom"
-import type { GameBar } from "../../interfaces/Game"
-import { ReadGames } from "../../api/functions"
-import type { ResponseContainer } from "../../api/base"
-import { Path } from "../../enum/Path"
-import { useAuth } from "../../hooks/AuthContext"
+const MainPage = () => {
+    // Заглушка для данных пользователя
+    const user = {
+        name: 'Алексей',
+        avatar: 'https://i.pravatar.cc/150?img=12',
+        rating: 1420,
+        gamesPlayed: 37,
+    };
 
-
-interface IProps {
-
-}
-
-const MainPage = (props: IProps) => {
-    const navigate = useNavigate()
-    const auth = useAuth()
-    const [gameList, setGameList] = useState<GameBar[]>([
-    ])
-
-    useEffect(() => {
-        ReadGames((resp: ResponseContainer<GameBar[]>) => {
-            // setIsChecked(true);
-            if (resp.status === 'ok') {
-                if (resp.data) {
-                    setGameList([...resp.data])
-                }
-            }
-        })
-    }, [])
-
-    const openGame = (id: String) => {
-        console.log(id)
-        navigate(Path.PGame + '/' + id)
-    }
-
+    // Заглушка для ближайших игр
+    const upcomingGames = [
+        { id: 1, name: 'Texas Hold\'em', date: 'Сегодня, 20:00', players: 8, maxPlayers: 10, buyIn: 1500, location: 'Москва, ул. Тверская 12' },
+        { id: 2, name: 'Omaha Hi-Lo', date: 'Завтра, 19:30', players: 5, maxPlayers: 8, buyIn: 2000, location: 'Москва, Цветной бульвар 3' },
+    ];
 
     return (
-        <div
-            className="flex flex-1 h-screen max-w-[400px] flex-col "
-        // style={{
-        //     backgroundImage: `url(${BackImage}) `,
-        //     backgroundSize: '100% 100%',
-        //     backgroundPosition: 'top',
-        //     backgroundRepeat: "no-repeat"
-        // }}
-        >
-            {/* Header */}
-            <div className="flex font-bold bg-[#150f07] items-center justify-center p-2 ">
-                {/* <SearchIcon className="text-white  font-bold" /> */}
-                <Typography size="h4" className="text-[#c09d36]">PokerHub Club</Typography>
-                <div className="absolute right-5 top-2">
-                    <Button size="small" onClick={() => auth.logout()}>Out</Button>
+        <div className="min-h-screen bg-[#0f0e12] text-[#f0f0f0]">
+            {/* Шапка */}
+            <header className="bg-[#1a1a24]/80 backdrop-blur-md border-b border-[#2a2a3a] sticky top-0 z-10">
+                <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-[#f5b544] rounded-md flex items-center justify-center font-bold text-[#0f0e12] text-lg">♠</div>
+                        <span className="text-xl font-bold tracking-tight">Poker<span className="text-[#f5b544]">Hub</span></span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Link to="/rating" className="text-[#a0a0b0] hover:text-[#f5b544] transition-colors">
+                            <Trophy size={20} />
+                        </Link>
+                        <Link to="/account" className="flex items-center gap-2 bg-[#2a2a3a] rounded-full pl-2 pr-3 py-1 hover:bg-[#2a2a3a]/70 transition-colors">
+                            <img src={user.avatar} alt="Avatar" className="w-7 h-7 rounded-full border border-[#f5b544]" />
+                            <span className="text-sm font-medium hidden sm:inline text-[#f0f0f0]">{user.name}</span>
+                        </Link>
+                    </div>
                 </div>
-            </div>
-            <div
-                className="relative flex flex-col h-[400px] pt-6 px-4 w-full "
-            >
-                <Typography size="h5" className="text-[#5e5e5e] font-extralight">PokerHub</Typography>
-                <div className="flex items-start justify-center flex-col">
-                    <Typography size="h1" className="text-white " >Спортивный покер —</Typography>
-                    <span className="text-[#cb9d33] text-[20px]">это не про деньги</span>
-                </div>
-                <Typography className="text-[#807f7f] text-[14px] pt-4">Турниры, рейтинги и живое комьюнити. Выбирай <br /> турнир и присоединяйся!</Typography>
+            </header>
 
-                <div className="flex justify-start gap-4 pt-4">
-                    <Button size="small">Войти</Button>
-                    <Button size="small" variant="tetriary">Зарегистрироваться</Button>
-                </div>
-                <Typography size="h6" className="text-[#5e5e5e] pt-2 font-extralight">Ближайшие турниры</Typography>
-            </div>
-            <ScrollArea className="flex flex-1 w-full ">
-                <div className="flex flex-1 flex-col gap-2 px-4 text-white font-bold">
-                    {gameList.map((item, index) => (
-                        <div
-                            key={index}
-                            className="relative w-full flex flex-col items-center
-                             justify-end  border-2 border-amber-600/20 rounded-2xl bg-cover
-                             overflow-hidden h-100"
-                        >
-                            <div className="flex justify-center items-center w-full"><img src={JockerImage} alt="" /></div>
-                            <div className="flex flex-col w-full h-40  text-white px-4 pt-1 z-10">
-                                <div className="flex flex-col h-full items-stretch">
-                                    <Typography size="h4">{item.name}</Typography>
-                                    <Typography className="text-[#5e5e5e]" size="h5">{item.player_count}/{item.player_maxcount} участников</Typography>
-                                    <Typography className="text-[#c09d36] pt-8" size="h5">Депозит: {item.deposit}₽</Typography>
-                                </div>
-                                <Button size="big" onClick={() => { console.log(item); openGame(item.id) }}>Регистрация на турнир</Button>
-                            </div>
+            <main className="container mx-auto px-4 py-6 max-w-3xl">
+                {/* Приветственный баннер */}
+                <section className="bg-gradient-to-r from-[#1a1a24] to-[#2a2a3a] rounded-xl p-6 mb-8 shadow-[0_8px_24px_rgba(0,0,0,0.4)] border border-[#f5b544]/10 relative overflow-hidden">
+                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#f5b544]/10 rounded-full blur-3xl"></div>
+                    <div className="relative z-1">
+                        <h1 className="text-2xl md:text-3xl font-bold mb-1 text-[#f0f0f0]">Добро пожаловать, {user.name}! ♠️</h1>
+                        <p className="text-[#a0a0b0] mb-4">Ваш рейтинг в клубе: <span className="text-[#f5b544] font-bold">{user.rating}</span> | Игр сыграно: {user.gamesPlayed}</p>
+                        <div className="flex flex-wrap gap-3">
+                            <Link to="/game/1" className="bg-[#f5b544] hover:bg-[#d49a2e] text-[#0f0e12] font-semibold px-5 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-[0_0_15px_rgba(245,181,68,0.3)]">
+                                Найти игру <ChevronRight size={18} />
+                            </Link>
+                            <button className="border border-[#a0a0b0]/30 text-[#a0a0b0] hover:border-[#f5b544] hover:text-[#f5b544] px-5 py-2 rounded-lg transition-colors">
+                                Создать стол
+                            </button>
                         </div>
-                    ))}
-                </div>
-            </ScrollArea>
+                    </div>
+                </section>
+
+                {/* Ближайшие игры */}
+                <section>
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-semibold flex items-center gap-2 text-[#f0f0f0]">
+                            <Calendar size={22} className="text-[#f5b544]" /> Ближайшие игры
+                        </h2>
+                        <Link to="/game/1" className="text-[#f5b544] hover:underline text-sm flex items-center gap-1">
+                            Все <ChevronRight size={16} />
+                        </Link>
+                    </div>
+                    <div className="space-y-4">
+                        {upcomingGames.map((game) => (
+                            <div key={game.id} className="bg-[#1a1a24] rounded-xl p-5 shadow-[0_8px_24px_rgba(0,0,0,0.4)] border border-[#2a2a3a] hover:border-[#f5b544]/30 transition-colors">
+                                <div className="flex flex-wrap justify-between items-start gap-2">
+                                    <div>
+                                        <h3 className="text-lg font-bold text-[#f0f0f0]">{game.name}</h3>
+                                        <p className="text-[#a0a0b0] text-sm flex items-center gap-1 mt-1">
+                                            <MapPin size={14} /> {game.location}
+                                        </p>
+                                    </div>
+                                    <span className="bg-[#f5b544]/10 text-[#f5b544] text-sm font-medium px-3 py-1 rounded-full border border-[#f5b544]/20">
+                                        {game.date}
+                                    </span>
+                                </div>
+                                <div className="flex flex-wrap items-center justify-between mt-3 pt-3 border-t border-[#2a2a3a]">
+                                    <div className="flex items-center gap-4 text-sm text-[#a0a0b0]">
+                                        <span className="flex items-center gap-1"><Users size={16} /> {game.players}/{game.maxPlayers}</span>
+                                        <span className="flex items-center gap-1">💰 {game.buyIn} ₽</span>
+                                    </div>
+                                    <Link to={`/game/${game.id}`} className="bg-[#f5b544] hover:bg-[#d49a2e] text-[#0f0e12] font-medium px-4 py-1.5 rounded-lg text-sm transition-colors">
+                                        Зарегистрироваться
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </main>
         </div>
-    )
-}
+    );
+};
 
 export default MainPage;
